@@ -1,0 +1,33 @@
+service: selenium-layer
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: dev
+  region: ap-northeast-1
+  profile: serverless
+
+layers:
+  selenium:
+    path: selenium
+    description: selenium layer
+    compatibleRuntimes:
+      - python3.6
+  chrome:
+    path: chrome
+    description: chrome layer
+    compatibleRuntimes:
+      - python3.6
+
+resources:
+  Outputs:
+    SeleniumLayerExport:
+      Value:
+        Ref: SeleniumLambdaLayer
+      Export:
+        Name: SeleniumLambdaLayer
+    ChromeLayerExport:
+      Value:
+        Ref: ChromeLambdaLayer
+      Export:
+        Name: ChromeLambdaLayer

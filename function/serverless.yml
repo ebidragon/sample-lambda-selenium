@@ -1,0 +1,30 @@
+service: crawler-selenium
+
+plugins:
+  - serverless-dotenv-plugin
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: dev
+  region: ap-northeast-1
+  profile: serverless
+  timeout: 900
+  environment:
+    SELENIUM_LAYER_SERVICE: selenium-layer
+
+package:
+  exclude:
+    - node_modules/**
+    - package.json
+    - package-lock.json
+    - .env
+    - .env.example
+
+functions:
+  crawler:
+    handler: handler.crawler
+    description: crawler function
+    layers:
+      - ${cf:${self:provider.environment.SELENIUM_LAYER_SERVICE}-${opt:stage, self:provider.stage}.SeleniumLayerExport}
+      - ${cf:${self:provider.environment.SELENIUM_LAYER_SERVICE}-${opt:stage, self:provider.stage}.ChromeLayerExport}
