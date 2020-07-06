@@ -4,7 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-autopep8 = "*"
+black = "*"
 flake8 = "*"
 flake8-import-order = "*"
 
@@ -19,4 +19,7 @@ python_version = "3.8"
 start = "python index.py"
 getdriver = "python getdriver.py"
 lint = "flake8 --show-source ."
-format = "autopep8 -ivr ."
+format = "black --diff ."
+
+[pipenv]
+allow_prereleases = true
